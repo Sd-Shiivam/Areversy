@@ -1,0 +1,12 @@
+services:
+  areversy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/uploads:/app/backend/uploads
+    environment:
+      - FLASK_ENV=development
+    command: python app.py
