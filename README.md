@@ -3,8 +3,8 @@
 </div>
 
 <div align="center">
-    <img src="frontend/public/readmelogo.png" alt="Codx Firewall Logo">
-    <p><em>Advanced Security for Modern Web Browsing </em></p>
+    <img src="frontend/public/readmelogo.png" alt="AReversy Logo" width="150">
+    <p><em>Customize, analyze and rebuild Android applications with ease</em></p>
 </div>
 <div align="center">
 <a href="https://github.com/sd-shiivam/areversy/blob/main/LICENSE"><img src="https://img.shields.io/github/license/sd-shiivam/areversy" alt="GitHub license"></a>
