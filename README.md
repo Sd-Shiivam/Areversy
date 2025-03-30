@@ -1,23 +1,32 @@
-# AReversy
+<div align="center">
+<h1> 🔥 AReversy <br> Android app Analysis Solution</h1>
+</div>
 
-![GitHub license](https://img.shields.io/github/license/sd-shiivam/areversy)
-![GitHub issues](https://img.shields.io/github/issues/sd-shiivam/areversy)
-![GitHub stars](https://img.shields.io/github/stars/sd-shiivam/areversy)
-![GitHub forks](https://img.shields.io/github/forks/sd-shiivam/areversy)
-![Build Status](https://github.com/sd-shiivam/areversy/workflows/Build/badge.svg)
-
+<div align="center">
+    <img src="frontend/public/readmelogo.png" alt="Codx Firewall Logo">
+    <p><em>Advanced Security for Modern Web Browsing </em></p>
+</div>
+<div align="center">
+<a href="https://github.com/sd-shiivam/areversy/blob/main/LICENSE"><img src="https://img.shields.io/github/license/sd-shiivam/areversy" alt="GitHub license"></a>
+<a href="https://github.com/sd-shiivam/areversy/issues"><img src="https://img.shields.io/github/issues/sd-shiivam/areversy" alt="GitHub issues"></a>
+<a href="https://github.com/sd-shiivam/areversy/stargazers"><img src="https://img.shields.io/github/stars/sd-shiivam/areversy" alt="GitHub stars"></a>
+<a href="https://github.com/sd-shiivam/areversy/network/members"><img src="https://img.shields.io/github/forks/sd-shiivam/areversy" alt="GitHub forks"></a>
+</div>
+<br>
+<hr>
+<br>
 AReversy is a powerful web-based tool for reverse-engineering and modifying Android APK files. It provides an intuitive interface for decompiling, analyzing, modifying, and rebuilding Android applications with enhanced security features.
 
 ## ✨ Key Features
 
-- 📱 APK Decompilation and Rebuilding
-- 🎨 Asset and Icon Modification
-- 📝 AndroidManifest.xml Visual Editor
-- 🔐 Advanced APK Signing
-- 💻 Modern React UI with Material Design
-- 📊 Comprehensive Operation Logging
-- 🔍 Code Analysis Tools
-- 🔒 Security Scanning
+- [x] 📱 APK Decompilation and Rebuilding
+- [x] 🎨 Asset and Icon Modification
+- [x] 📝 AndroidManifest.xml customization
+- [x] 🔐 Advanced APK Signing
+- [x] 💻 Modern React UI with Material Design
+- [x] 📊 Comprehensive Operation Logging
+- [x] 🔍 Code Analysis Tools
+- [ ] 🔒 Security Scanning
 
 ## 🚀 Prerequisites
 
@@ -41,9 +50,7 @@ Access the web interface at `http://localhost:5000`
 
 ```
 areversy/
-├── backend/             # Flask API and processing tools
-│   ├── api/            # REST endpoints
-│   ├── core/           # Business logic
+├── backend/            # Flask App and processing tools
 │   └── tools/          # External utilities
 ├── frontend/           # React UI components
 ├── Dockerfile
