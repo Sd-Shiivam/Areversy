@@ -105,21 +105,58 @@ def upload_apk():
         tree = ET.parse(manifest_path)
         root = tree.getroot()
         permissions = [elem.attrib['{http://schemas.android.com/apk/res/android}name'] 
-                      for elem in root.findall('.//uses-permission')]
+                       for elem in root.findall('.//uses-permission')]
         listeners = [elem.attrib['{http://schemas.android.com/apk/res/android}name'] 
-                    for elem in root.findall('.//receiver') + root.findall('.//service')]
+                     for elem in root.findall('.//receiver') + root.findall('.//service')]
+        activities = [elem.attrib['{http://schemas.android.com/apk/res/android}name'] 
+                      for elem in root.findall('.//activity')]
     except ET.ParseError as e:
         logger.error(f"Failed to parse manifest: {e}")
         return jsonify({'error': 'Manifest parsing failed'}), 500
     
-    logger.info(f"APK decompiled successfully. Icons: {len(icons)}, Assets: {len(assets)}, Permissions: {len(permissions)}, Listeners: {len(listeners)}")
+    logger.debug(f"Complited Parsing manifest at {manifest_path}")
+
+    background_workers = [elem.attrib['{http://schemas.android.com/apk/res/android}name'] 
+                         for elem in root.findall('.//service')]
+    
+
+    smali_dir = os.path.join(decompiled_dir, 'smali')
+    lines_of_code = 0
+    total_classes = 0
+
+    try:
+        if os.path.exists(smali_dir):
+            for root, dirs, files in os.walk(smali_dir):
+                for file in files:
+                    if file.endswith('.smali'):
+                        with open(os.path.join(root, file), 'r', encoding='utf-8') as f:
+                            lines_of_code += sum(1 for line in f if line.strip())
+                        total_classes += 1
+
+    except Exception as e:
+        print(f"Error processing smali files: {e}")
+        return None
+
+    stats = {
+        'lines_of_code': lines_of_code,
+        'total_permissions': len(permissions),
+        'total_listeners': len(listeners),
+        'total_activities': len(activities),
+        'background_workers': len(background_workers),
+        'total_classes': total_classes,
+        'total_icons': len(icons),
+        'total_assets': len(assets)
+    }
+    
+    logger.info(f"APK decompiled successfully. Stats: {stats}")
     return jsonify({
         'message': 'APK decompiled',
         'decompiled_dir': decompiled_dir,
         'icons': icons,
         'assets': assets,
         'permissions': permissions,
-        'listeners': listeners
+        'listeners': listeners,
+        'stats': stats
     })
 
 @app.route('/replace_logo', methods=['POST'])

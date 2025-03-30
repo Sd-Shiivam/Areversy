@@ -59,6 +59,18 @@ areversy/
 └── README.md
 ```
 
+## 📸 Screenshots
+
+<div align="center">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+        <img src="frontend/public/areversy1.png" alt="AReversy Dashboard" width="45%" />
+        <img src="frontend/public/areversy2.png" alt="APK Analysis" width="45%" />
+        <img src="frontend/public/areversy3.png" alt="Code Modification" width="45%" />
+        <img src="frontend/public/areversy4.png" alt="Results View" width="45%" />
+    </div>
+    <p><em>AReversy interface showing main features and workflow</em></p>
+</div>
+
 ## 🛠️ Setup
 
 1. Generate secure keystore:
