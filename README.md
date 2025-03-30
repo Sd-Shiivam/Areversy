@@ -3,7 +3,7 @@
 </div>
 
 <div align="center">
-    <img src="frontend/public/readmelogo.png" alt="AReversy Logo" width="150">
+    <img src="frontend/public/readmelogo.png" alt="AReversy Logo" width="200">
     <p><em>Customize, analyze and rebuild Android applications with ease</em></p>
 </div>
 <div align="center">
