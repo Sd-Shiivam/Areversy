@@ -1,5 +1,5 @@
 <div align="center">
-<h1> 🔥 AReversy <br> Android app Analysis Solution</h1>
+<h1> AReversy <br> Android app Analysis Solution</h1>
 </div>
 
 <div align="center">
