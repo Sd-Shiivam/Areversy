@@ -29,35 +29,23 @@ ALLOWED_EXTENSIONS = {'apk', 'png', 'jpg', 'jpeg'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# ============================================================================
-# ENHANCED SECURITY SCANNER - COMPREHENSIVE VULNERABILITY DETECTION
-# ============================================================================
 
-# =============================================================================
-# 1. API ENDPOINT EXTRACTION PATTERNS - ENHANCED FOR ALL URL TYPES
-# =============================================================================
-
-# Full URL patterns (http/https) - captures URLs like http://bbjy.com/bhh/huhu
 FULL_URL_PATTERNS = [
     (r'https?://[a-zA-Z0-9][-a-zA-Z0-9]*(\.[a-zA-Z0-9][-a-zA-Z0-9]*)+(/[^\s"\']*)?', 'Full URL'),
     (r'["\']https?://[^\"\']+["\']?', 'Quoted Full URL'),
 ]
 
-# Relative path patterns - captures paths like /mpb/hgyg, /api/v1/..., /v1/...
 RELATIVE_PATH_PATTERNS = [
-    # API versioned paths
     (r'["\'](/v[0-9]+/[^\"\']+)', 'Relative API Path'),
     (r'["\'](/api/[^\"\']+)', 'API Endpoint Path'),
     (r'["\'](/rest/[^\"\']+)', 'REST Endpoint Path'),
     (r'["\'](/service/[^\"\']+)', 'Service Endpoint Path'),
     (r'["\'](/webhook/[^\"\']+)', 'Webhook Endpoint Path'),
     (r'["\'](/graphql/[^\"\']*)', 'GraphQL Path'),
-    # Generic paths that look like endpoints - captures /mpb/hgyg style patterns
     (r'["\'](/[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+)', 'Relative Path Endpoint'),
     (r'["\'](/[a-zA-Z0-9_-]{2,})', 'Single Path Segment'),
 ]
 
-# REST API patterns (full URLs)
 REST_API_PATTERNS = [
     (r'["\']?(?:baseUrl|baseURL|base_url|API_URL|api_url|API_ENDPOINT|api_endpoint)["\']?\s*[:=]\s*["\']?(https?://[^\s"\']+)', 'REST Base URL'),
     (r'"(?:GET|POST|PUT|DELETE|PATCH)\s+(https?://[^\s"\']+)', 'REST Endpoint'),
@@ -68,7 +56,6 @@ REST_API_PATTERNS = [
     (r'(?:retrofit|okhttp|HttpUrl|HttpClient|URLConnection).*?(https?://[^\s"\']+)', 'HTTP Client URL'),
 ]
 
-# GraphQL patterns
 GRAPHQL_PATTERNS = [
     (r'https?://[^\s"\']+/graphql', 'GraphQL Endpoint'),
     (r'https?://[^\s"\']+/api/graphql', 'GraphQL API'),
@@ -77,7 +64,6 @@ GRAPHQL_PATTERNS = [
     (r'"query"\s*:\s*"{[^}]*}"', 'Inline GraphQL Query'),
 ]
 
-# Firebase patterns
 FIREBASE_PATTERNS = [
     (r'https?://[^\s"\']+\.firebase(io|database\.com)', 'Firebase URL'),
     (r'["\']?firebase_url["\']?\s*[:=]\s*["\']?([^\s"\']+)', 'Firebase Config'),
@@ -89,7 +75,6 @@ FIREBASE_PATTERNS = [
     (r'["\']?appId["\']?\s*[:=]\s*["\']?([0-9:\-a-fA-F]+)', 'Firebase App ID'),
 ]
 
-# WebSocket patterns
 WEBSOCKET_PATTERNS = [
     (r'wss?://[^\s"\']+', 'WebSocket URL'),
     (r'socket\.io\s*[:=]\s*["\']?([^\s"\']+)', 'Socket.IO Endpoint'),
@@ -98,7 +83,6 @@ WEBSOCKET_PATTERNS = [
     (r'(?:stomp|STOMP).*?(?:broker|endpoint).*?["\']([^\s"\']+)', 'STOMP Broker'),
 ]
 
-# Cloud storage patterns
 CLOUD_STORAGE_PATTERNS = [
     (r'https?://[^\s"\']+\.s3\.amazonaws\.com[^\s"\']*', 'AWS S3 Bucket'),
     (r'https?://[^\s"\']+\.blob\.core\.windows\.net[^\s"\']*', 'Azure Blob Storage'),
@@ -107,7 +91,6 @@ CLOUD_STORAGE_PATTERNS = [
     (r'(?:aws_access_key|AWS_ACCESS_KEY|S3_BUCKET|S3_KEY).*?["\']?([^\s"\']+)', 'AWS Credentials'),
 ]
 
-# Authentication patterns
 AUTH_PATTERNS = [
     (r'(?:Bearer|Token|Auth|Authorization).*?["\']([A-Za-z0-9_\-\.]+)', 'Auth Token'),
     (r'(?:api[_-]?key|API_KEY|apikey)[:=]\s*["\']?([A-Za-z0-9_-]{20,})', 'API Key'),
@@ -119,7 +102,6 @@ AUTH_PATTERNS = [
     (r'(?:hmac|HMAC|Hmac).*?[:=]\s*["\']?([a-fA-F0-9]{20,})', 'HMAC Key'),
 ]
 
-# Social API patterns
 SOCIAL_API_PATTERNS = [
     (r'(?:graph\.facebook\.com|facebook\.com/api)[^\s"\']*', 'Facebook API'),
     (r'(?:api\.twitter\.com|twitter\.com)[^\s"\']*', 'Twitter API'),
@@ -135,9 +117,6 @@ SOCIAL_API_PATTERNS = [
     (r'(?:pusher\.com|api\.pusher\.com)[^\s"\']*', 'Pusher API'),
 ]
 
-# =============================================================================
-# 2. DANGEROUS PERMISSIONS
-# =============================================================================
 
 DANGEROUS_PERMISSIONS = {
     'android.permission.READ_SMS': {'risk': 'HIGH', 'description': 'Can read all SMS messages'},
@@ -164,10 +143,6 @@ DANGEROUS_PERMISSIONS = {
     'android.permission.ACCESS_NOTIFICATION_POLICY': {'risk': 'MEDIUM', 'description': 'Access Do Not Disturb settings'},
 }
 
-# =============================================================================
-# 3. INSECURE CRYPTOGRAPHIC PATTERNS
-# =============================================================================
-
 INSECURE_CRYPTO_PATTERNS = {
     'MD5': {'risk': 'HIGH', 'description': 'MD5 is cryptographically broken and vulnerable to collisions'},
     'SHA1': {'risk': 'MEDIUM', 'description': 'SHA1 is considered weak for security purposes'},
@@ -191,9 +166,6 @@ INSECURE_CRYPTO_PATTERNS = {
     'setHostnameVerifier': {'risk': 'MEDIUM', 'description': 'Custom hostname verifier'},
 }
 
-# =============================================================================
-# 4. HARDCODED SECRETS PATTERNS
-# =============================================================================
 
 HARDCODED_SECRET_PATTERNS = [
     (r'["\']?(?:api[_-]?key|apikey|API_KEY)["\']?\s*[:=]\s*["\']?([a-zA-Z0-9_\-]{20,})', 'API Key', 'CRITICAL'),
@@ -229,9 +201,6 @@ HARDCODED_SECRET_PATTERNS = [
     (r'(?:connection[_-]?string|CONNECTION_STRING|db[_-]?password)["\']?\s*[:=]\s*["\']?(?:postgres|mysql|oracle|sqlserver|mongodb)://[^\s"\']+', 'Database Connection String', 'CRITICAL'),
 ]
 
-# =============================================================================
-# 5. VULNERABLE LIBRARIES PATTERNS
-# =============================================================================
 
 VULNERABLE_LIBRARIES = {
     'okhttp': {'versions': ['<4.0.0'], 'cve': 'CVE-2021-0341, CVE-2020-29582', 'risk': 'HIGH', 'description': 'HTTP client with various protocol vulnerabilities'},
@@ -272,9 +241,6 @@ VULNERABLE_LIBRARIES = {
     'hilt': {'versions': ['<2.44'], 'cve': 'Various', 'risk': 'LOW', 'description': 'Hilt DI framework'},
 }
 
-# =============================================================================
-# 6. WEBVIEW VULNERABILITIES
-# =============================================================================
 
 WEBVIEW_VULNERABILITIES = [
     ('setJavaScriptEnabled', {'risk': 'HIGH', 'description': 'JavaScript enabled in WebView - allows XSS and JS injection attacks'}),
@@ -297,9 +263,6 @@ WEBVIEW_VULNERABILITIES = [
     ('evaluateJavascript', {'risk': 'HIGH', 'description': 'JavaScript evaluation'}),
 ]
 
-# =============================================================================
-# 7. INTENT HANDLING VULNERABILITIES
-# =============================================================================
 
 INTENT_VULNERABILITIES = [
     ('startActivity', {'risk': 'HIGH', 'description': 'Activity started without verification'}),
@@ -320,10 +283,6 @@ INTENT_VULNERABILITIES = [
     ('setDataAndType', {'risk': 'MEDIUM', 'description': 'Intent data and type set'}),
     ('createChooser', {'risk': 'LOW', 'description': 'Chooser created'}),
 ]
-
-# =============================================================================
-# 8. DATA STORAGE VULNERABILITIES
-# =============================================================================
 
 DATA_STORAGE_PATTERNS = [
     ('getSharedPreferences', {'risk': 'MEDIUM', 'description': 'SharedPreferences usage'}),
@@ -351,9 +310,6 @@ DATA_STORAGE_PATTERNS = [
     ('AllHostsNameVerifier', {'risk': 'CRITICAL', 'description': 'Verifies all hostnames - MITM vulnerable'}),
 ]
 
-# =============================================================================
-# 9. DYNAMIC CODE LOADING VULNERABILITIES
-# =============================================================================
 
 DYNAMIC_CODE_PATTERNS = [
     ('DexClassLoader', {'risk': 'HIGH', 'description': 'Dynamic class loading from external source'}),
@@ -369,10 +325,6 @@ DYNAMIC_CODE_PATTERNS = [
     ('exec', {'risk': 'HIGH', 'description': 'Shell command execution'}),
 ]
 
-# =============================================================================
-# 10. REFLECTION AND INTROSPECTION VULNERABILITIES
-# =============================================================================
-
 REFLECTION_PATTERNS = [
     ('getDeclaredField', {'risk': 'HIGH', 'description': 'Access to private fields via reflection'}),
     ('getDeclaredMethod', {'risk': 'HIGH', 'description': 'Access to private methods via reflection'}),
@@ -383,10 +335,6 @@ REFLECTION_PATTERNS = [
     ('Field.get', {'risk': 'MEDIUM', 'description': 'Field access via reflection'}),
     ('Field.set', {'risk': 'HIGH', 'description': 'Field modification via reflection'}),
 ]
-
-# =============================================================================
-# 11. ROOT AND EMULATOR DETECTION
-# =============================================================================
 
 ROOT_DETECTION_PATTERNS = [
     ('/system/bin/su', {'risk': 'LOW', 'description': 'Checking for root binary'}),
@@ -407,9 +355,6 @@ ROOT_DETECTION_PATTERNS = [
     ('nox', {'risk': 'LOW', 'description': 'Nox emulator detection'}),
 ]
 
-# =============================================================================
-# 12. TAMPERING AND DEBUGGING DETECTION
-# =============================================================================
 
 TAMPERING_PATTERNS = [
     ('android:debuggable="true"', {'risk': 'CRITICAL', 'description': 'Debuggable flag set to true in manifest'}),
@@ -423,9 +368,6 @@ TAMPERING_PATTERNS = [
     ('setMediaPlaybackID', {'risk': 'LOW', 'description': 'Media playback ID'}),
 ]
 
-# =============================================================================
-# 13. CRYPTOGRAPHIC WEAKNESSES
-# =============================================================================
 
 CRYPTO_WEAKNESS_PATTERNS = [
     ('KeyPairGenerator', {'risk': 'HIGH', 'description': 'Key pair generation'}),
@@ -442,9 +384,6 @@ CRYPTO_WEAKNESS_PATTERNS = [
     ('HostnameVerifier', {'risk': 'HIGH', 'description': 'Hostname verification'}),
 ]
 
-# =============================================================================
-# 14. PRIVACY VIOLATIONS
-# =============================================================================
 
 PRIVACY_PATTERNS = [
     ('android_id', {'risk': 'MEDIUM', 'description': 'Android ID usage'}),
@@ -464,10 +403,6 @@ PRIVACY_PATTERNS = [
     ('BiometricPrompt', {'risk': 'LOW', 'description': 'Biometric authentication'}),
 ]
 
-# =============================================================================
-# 15. DEEP LINK AND SCHEME VULNERABILITIES
-# =============================================================================
-
 DEEPLINK_PATTERNS = [
     ('android:scheme', {'risk': 'MEDIUM', 'description': 'Custom URL scheme defined'}),
     ('android:host', {'risk': 'LOW', 'description': 'Deep link host defined'}),
@@ -480,10 +415,6 @@ DEEPLINK_PATTERNS = [
     ('category android:android.intent.category.BROWSABLE', {'risk': 'MEDIUM', 'description': 'BROWSABLE category - can be opened from browser'}),
     ('category android:android.intent.category.DEFAULT', {'risk': 'LOW', 'description': 'DEFAULT category'}),
 ]
-
-# =============================================================================
-# 16. INTER-PROCESS COMMUNICATION (IPC) VULNERABILITIES
-# =============================================================================
 
 IPC_PATTERNS = [
     ('ContentResolver', {'risk': 'MEDIUM', 'description': 'Content resolver usage'}),
@@ -500,10 +431,6 @@ IPC_PATTERNS = [
     ('ServiceConnection', {'risk': 'MEDIUM', 'description': 'Service connection defined'}),
 ]
 
-# =============================================================================
-# 17. EXPORTED COMPONENTS PATTERNS
-# =============================================================================
-
 EXPORTED_COMPONENT_PATTERNS = [
     ('<activity', {'risk': 'MEDIUM', 'description': 'Activity component defined'}),
     ('<service', {'risk': 'MEDIUM', 'description': 'Service component defined'}),
@@ -517,9 +444,6 @@ EXPORTED_COMPONENT_PATTERNS = [
     ('android:launchMode', {'risk': 'MEDIUM', 'description': 'Launch mode defined'}),
 ]
 
-# =============================================================================
-# 18. NETWORK SECURITY PATTERNS
-# =============================================================================
 
 NETWORK_PATTERNS = [
     ('usesCleartextTraffic', {'risk': 'MEDIUM', 'description': 'Cleartext HTTP traffic allowed'}),
@@ -532,9 +456,6 @@ NETWORK_PATTERNS = [
     ('trust-anchors', {'risk': 'LOW', 'description': 'Trust anchors defined'}),
 ]
 
-# =============================================================================
-# 19. BACKUP AND DATA EXPORT PATTERNS
-# =============================================================================
 
 BACKUP_PATTERNS = [
     ('android:allowBackup="true"', {'risk': 'MEDIUM', 'description': 'Backup allowed - data can be extracted'}),
@@ -545,10 +466,6 @@ BACKUP_PATTERNS = [
     ('android:restoreAnyVersion', {'risk': 'LOW', 'description': 'Restore any version allowed'}),
     ('android:killAfterRestore', {'risk': 'LOW', 'description': 'Kill after restore'}),
 ]
-
-# =============================================================================
-# 20. MISCELLANEOUS SECURITY PATTERNS
-# =============================================================================
 
 MISC_PATTERNS = [
     ('Toast', {'risk': 'LOW', 'description': 'Toast notification usage'}),
@@ -566,9 +483,6 @@ MISC_PATTERNS = [
     ('WebView', {'risk': 'HIGH', 'description': 'WebView usage'}),
 ]
 
-# =============================================================================
-# 21. SQL INJECTION PATTERNS
-# =============================================================================
 
 SQL_INJECTION_PATTERNS = [
     (r'SELECT\s+.*\+.*FROM', 'SQL concatenation in SELECT statement'),
@@ -581,10 +495,6 @@ SQL_INJECTION_PATTERNS = [
     (r'query\s*\(\s*.*\+', 'Database query with string concatenation'),
 ]
 
-# =============================================================================
-# 22. LOGGING PATTERNS  
-# =============================================================================
-
 LOGGING_PATTERNS = [
     (r'Log\.d\s*\(.*password', 'Debug log containing password'),
     (r'Log\.d\s*\(.*token', 'Debug log containing token'),
@@ -596,16 +506,12 @@ LOGGING_PATTERNS = [
     (r'printStackTrace\(\)', 'Stack trace printing to stdout'),
 ]
 
-# =============================================================================
-# ENHANCED API EXTRACTION FUNCTIONS
-# =============================================================================
 
 def extract_apis_from_content(content):
     """Extract all API endpoints and URLs from content - Enhanced for all URL types"""
     apis = []
     seen = set()
     
-    # Combine all API patterns including new FULL_URL_PATTERNS and RELATIVE_PATH_PATTERNS
     all_patterns = (
         FULL_URL_PATTERNS +
         RELATIVE_PATH_PATTERNS +
@@ -658,7 +564,6 @@ def extract_endpoints_from_manifest(manifest_path):
         
         ns = {'android': 'http://schemas.android.com/apk/res/android'}
         
-        # Find all activities with intent filters
         for activity in root.findall('.//activity'):
             name = activity.get('{http://schemas.android.com/apk/res/android}name', 
                               activity.get('name', 'Unknown'))
@@ -693,9 +598,6 @@ def extract_endpoints_from_manifest(manifest_path):
     
     return endpoints
 
-# =============================================================================
-# MAIN SCANNING FUNCTIONS
-# =============================================================================
 
 def scan_file_for_patterns(file_path, patterns, findings_list):
     """Scan a file for specific patterns"""
@@ -953,7 +855,6 @@ def scan_smali_for_vulnerabilities(smali_dir):
     return findings
 
 def analyze_manifest_security(manifest_path):
-    """Analyze AndroidManifest for security issues"""
     findings = {
         'exported_components': [],
         'debuggable': [],
@@ -1041,9 +942,6 @@ def analyze_manifest_security(manifest_path):
     
     return findings
 
-# ============================================================================
-# API ENDPOINTS
-# ============================================================================
 
 @app.route('/')
 def serve_react():
@@ -1178,7 +1076,6 @@ def upload_apk():
 
 @app.route('/security-scan', methods=['POST'])
 def security_scan():
-    """Comprehensive security scan endpoint with full vulnerability detection"""
     data = request.json
     decompiled_dir = data.get('decompiled_dir')
     
@@ -1302,7 +1199,6 @@ def security_scan():
             'action': 'Continue with security best practices'
         }
     
-    # Recommendations feature REMOVED as per user request
     
     logger.info(f"Security scan completed. Score: {results['security_score']}, Findings: {results['scan_summary']}")
     return jsonify(results)
